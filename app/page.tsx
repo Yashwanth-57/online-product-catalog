@@ -1,15 +1,16 @@
 import ProductList from "@/components/ProductList";
 
-// ✅ Pre-render this page at build time (SSG)
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+//  Pre-render this page at build time (SSG)
 export const revalidate = false; // never revalidate — static once built
 
 export default async function HomePage() {
-  // ✅ Fetch all products at build time
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/products`,
-    { cache: "force-cache" }
-  );
-
+  //  Fetch all products at build time
+ const res = await fetch(`${baseUrl}/api/products`, {
+  cache: "no-store",
+});
   const products = await res.json();
 
   return (
