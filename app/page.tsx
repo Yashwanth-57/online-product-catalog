@@ -1,7 +1,7 @@
 import ProductList from "@/components/ProductList";
 
 const baseUrl =
-  process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 //  Pre-render this page at build time (SSG)
 export const revalidate = false; // never revalidate — static once built

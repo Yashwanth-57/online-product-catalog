@@ -9,7 +9,7 @@ export default function ProductsPage() {
 
   //  Fetch products (client-side fetch from API)
   const fetchProducts = async () => {
-    const res = await fetch("/api/products");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`);
     const data = await res.json();
     setProducts(data);
   };

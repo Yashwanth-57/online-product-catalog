@@ -19,7 +19,8 @@ export default function RecommendationsPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("/api/products");
+       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
+
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
         setProducts(data);
