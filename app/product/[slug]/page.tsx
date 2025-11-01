@@ -1,10 +1,10 @@
 import { connectToDB } from "@/lib/db";
 import Product from "@/models/Product";
 
-// ✅ Incremental Static Regeneration
+//  Revalidate every 60s
 export const revalidate = 60;
 
-// ✅ Generate static paths at build time
+//  Static params generation
 export async function generateStaticParams() {
   await connectToDB();
   const products = await Product.find({}, "slug").lean();
@@ -14,22 +14,15 @@ export async function generateStaticParams() {
   }));
 }
 
-// ✅ Actual Product Page
-export default async function ProductPage({
-  params,
-}: {
-  params: { slug: string } | Promise<{ slug: string }>;
-}) {
-  // 🧠 Handle both sync and async params (for Next.js ISR)
-  const resolvedParams = await Promise.resolve(params);
-  const { slug } = resolvedParams;
+interface ProductPageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  //console.log("🔍 Slug param:", slug);
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { slug } = await params; // ✅ fixed
 
   await connectToDB();
   const product = await Product.findOne({ slug }).lean();
-
-  //console.log("🔍 Product found:", product);
 
   if (!product) {
     return (
@@ -89,4 +82,3 @@ export default async function ProductPage({
     </div>
   );
 }
-
