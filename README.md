@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#  Product Recommendation App (Next.js + MongoDB)
 
-## Getting Started
+**Author:** Yashwanth  
+**Date:** November 2025  
 
-First, run the development server:
+---
+##  Overview
 
-```bash
+This is a full-stack **Next.js application** that demonstrates different **rendering strategies** —  
+SSG, ISR, CSR, SSR, and hybrid rendering — using a real product-based use case.
+
+The app includes:
+- A **home page** (static rendered)
+- A **products page** (client-side rendered)
+- A **recommendation page** (hybrid rendering)
+- An **inventory dashboard** (server-side rendered)
+- An **admin dashboard** with authentication (CSR protected)
+
+---
+
+##  Tech Stack
+
+- **Next.js 14 (App Router)**
+- **TypeScript**
+- **MongoDB** for data storage
+- **Tailwind CSS** for UI
+- **React Hot Toast** for notifications
+
+---
+
+## Folder Structure
+
+my-product-app/
+├── app/
+│   ├── page.tsx                  → CSR (Client Side)
+│   ├── product/[slug]/page.tsx   → SSR (Server Side)
+│   ├── products/page.tsx         → ISR (Incremental Static Regeneration)
+│   ├── admin/page.tsx            → CSR (Client Side + Auth)
+│   ├── recommendations/page.tsx  → SSG (Static)
+│   ├── layout.tsx                → App Router layout
+│   ├── api/products/route.ts     → REST API (POST, GET)
+│   ├── api/products/[id]/route.ts → PUT, DELETE
+│   └── api/auth/route.ts         → Admin Auth (Bonus)
+│   
+├── components/
+│   ├── ProductCard.tsx
+│   ├── ProductList.tsx
+│   ├── AuthGate.tsx
+│   └── AdminForm.tsx (optional)
+│
+├── lib/
+│   ├── db.ts
+│   └── inventory.ts
+│   |__ auth.ts
+| 
+├── models/Product.ts
+├
+│  
+│
+├── .env.example
+├── package.json
+├── next.config.mjs
+└── tsconfig.json
+
+
+🔑 Environment Variables
+
+Create a .env.local file in the root directory:
+
+MONGODB_URI=your_mongodb_connection_string
+ADMIN_USER=admin
+ADMIN_PASS=1234
+
+
+
+🧩 How to Run the Project
+
+Clone the repository
+
+git clone https://github.com/yourusername/my-product-app.git
+cd my-product-app
+
+
+Install dependencies
+
+npm install
+
+
+Add environment variables
+
+Copy .env.example → .env.local
+
+Fill in your MongoDB URI and admin credentials.
+
+Run the development server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit the app
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+http://localhost:3000
