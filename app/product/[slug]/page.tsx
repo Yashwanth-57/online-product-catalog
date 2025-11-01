@@ -7,7 +7,7 @@ export const revalidate = 60;
 // Generate static params (build-time SSG paths)
 export async function generateStaticParams() {
   await connectToDB();
-  const products = await Product.find({}, "slug").lean();
+  const product = await Product.findOne({ slug }).lean();
 
   return products.map((p: any) => ({
     slug: p.slug,
