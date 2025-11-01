@@ -1,34 +1,37 @@
 import { connectToDB } from "@/lib/db";
 import Product from "@/models/Product";
 
-// Revalidate every 60s (ISR)
+// ✅ Incremental Static Regeneration
 export const revalidate = 60;
 
-// Generate static params (build-time SSG paths)
+// ✅ Generate static paths at build time
 export async function generateStaticParams() {
   await connectToDB();
-  const product = await Product.findOne({ slug }).lean();
+  const products = await Product.find({}, "slug").lean();
 
   return products.map((p: any) => ({
     slug: p.slug,
   }));
 }
 
+// ✅ Actual Product Page
 export default async function ProductPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string } | Promise<{ slug: string }>;
 }) {
-  
-  const { slug } = await params;
+  // 🧠 Handle both sync and async params (for Next.js ISR)
+  const resolvedParams = await Promise.resolve(params);
+  const { slug } = resolvedParams;
+
+  //console.log("🔍 Slug param:", slug);
 
   await connectToDB();
   const product = await Product.findOne({ slug }).lean();
 
+  //console.log("🔍 Product found:", product);
+
   if (!product) {
-
-     
-
     return (
       <div className="text-center text-red-600 py-20 text-xl">
         ❌ No product found
@@ -37,9 +40,8 @@ export default async function ProductPage({
   }
 
   return (
-   
     <div className="max-w-3xl mx-auto p-6">
-         <h1 className="text-2xl font-bold text-center mb-6">Product Detail (ISR)</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">Product Detail (ISR)</h1>
       <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-3 text-center">
           {product.name}
