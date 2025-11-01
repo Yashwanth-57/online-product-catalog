@@ -85,7 +85,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <p className="text-xs text-gray-400 text-right mt-6">
           Last updated:{" "}
-          {new Date(product.lastUpdated || product.updatedAt).toLocaleString()}
+          {new Date(product.lastUpdated || product.updatedAt || Date.now()).toLocaleString()}
+
         </p>
       </div>
     </div>
