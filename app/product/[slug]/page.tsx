@@ -1,7 +1,7 @@
 import { connectToDB } from "@/lib/db";
 import Product from "@/models/Product";
 
-//  Revalidate every 60s
+//  Revalidate every 61s
 export const revalidate = 60;
 
 //  Static params generation
@@ -19,10 +19,19 @@ interface ProductPageProps {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = await params; // ✅ fixed
+  const { slug } = await params; //  fixed
 
   await connectToDB();
-  const product = await Product.findOne({ slug }).lean();
+  const product = (await Product.findOne({ slug }).lean()) as {
+  name: string;
+  price: number;
+  description?: string;
+  category?: string;
+  slug: string;
+  inventory?: number;
+  lastUpdated?: string;
+  updatedAt?: string;
+} | null;
 
   if (!product) {
     return (
