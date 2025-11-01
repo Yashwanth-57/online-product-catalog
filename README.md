@@ -77,7 +77,7 @@ ADMIN_PASS=1234
 
 Clone the repository
 
-git clone https://github.com/yourusername/my-product-app.git
+git clone https://github.com/Yashwanth-57/online-product-catalog
 cd my-product-app
 
 
