@@ -215,9 +215,12 @@ function AdminDashboard() {
 // ✅ Protect admin
 export default function AdminPage() {
   return (
+     <>
+    <h3> username : admin  &  passowrd: 1234</h3>
     <AuthGate>
       <AdminDashboard />
     </AuthGate>
+     </>
   );
 }
 
